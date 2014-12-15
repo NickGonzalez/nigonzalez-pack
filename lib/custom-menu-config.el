@@ -1,0 +1,18 @@
+(setq menu-commands '((("Custom")
+		       ["Git" magit-status])
+		      (("Custom")
+		       ["Export ColorTheme" color-theme-print])
+		      (("Custom")
+		       ["Finder" finder])
+		      (("Custom")
+		       ["Terminal" terminal])
+		      (("Custom")
+		       ["Google" google])
+		      (("Clojure")
+		       ["Connect to REPL" cider-jack-in])
+		      (("Clojure" "Build")
+		       ["Build & Install" (lambda ()
+					    (interactive)
+					    (lein "do jar, install"))])))
+
+
