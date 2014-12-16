@@ -32,67 +32,88 @@
                       '("Clojure" "Refactor")
                       ["Remove unused requires" cljr-remove-unused-requires])
 
-  (easy-menu-add-item nil
-                      '("Clojure" "Build")
-                      ["Build & Run" (lambda ()
-                                       (interactive)
-                                       (lein "do jar, run "))])
-  (easy-menu-add-item nil
-                      '("Clojure" "Build")
-                      ["Rebuild & Run" (lambda ()
-                                         (interactive)
-                                         (lein "do sub jar, sub install, jar, run "))])
-  (easy-menu-add-item nil
-                      '("Clojure" "Build")
-                      ["Build" lein-jar])
+  (let ((build-menu (easy-menu-define clojure-build-menu nil
+	    "Menu Clojure Builds"
+	    `("Build"
+	      ("App"
+	       ["Run" lein-run]
+	       ["Build & Run" (lambda ()
+				(interactive)
+				(lein "do jar")
+				(lein-run))]
+	       ["Rebuild & Run" (lambda ()
+				  (interactive)
+				  (lein "do sub jar, sub install, jar")
+				  (lein-run))])
+	      ("Lib"
+	       ["Build & Install" (lambda ()
+				    (interactive)
+				    (lein "do jar, install"))]
+	       ["Rebuild & Install" (lambda ()
+				      (interactive)
+				      (lein "do clean, jar, install"))])
+	      ("Dependencies"
+	       ["Rebuild All" (lambda ()
+				(interactive)
+				(lein "do sub clean, sub jar, sub install, clean, jar, uberjar "))]
+	       ["Build Dependencies" (lambda ()
+				       (interactive)
+				       (lein "do sub clean, sub jar, sub install"))])
 
+	      ("Documentation"
+	       ["Build API Doc" (lambda ()
+				  (interactive)
+				  (lein "doc"))]
+	       ["Build Margin Doc" (lambda ()
+				       (interactive)
+				       (lein "marg"))]
+	       "--"
+	       ["Build All" (lambda ()
+			      (interactive)
+			      (lein "docs"))])
+	      "--"
+	      ["Clean" lein-clean]
+	      ["Build" lein-jar]
+	      ["Rebuild" (lambda ()
+			   (interactive)
+			   (lein "do clean, jar, uberjar"))]
+	      ["Run Lint" (lambda ()
+			    (interactive)
+			    (lein "checkall"))]
+	      "--"
+	      ["Version info" nick-version]))))
+    (easy-menu-add-item nil
+			'("Clojure")
+			clojure-build-menu))
+  (easy-menu-define clojure-nav-menu nil
+    "Menu Clojure Navigation"
+    `("Navigation"
+      ["Open Project File" lein-open-project-file]
+      ["Search Project" lein-search-project]
+      ["Search Project (word at point)" lein-search-project-at-point]
+      ["Toggle Source / Test" lein-switch-between-source-and-test]))
   (easy-menu-add-item nil
-                      '("Clojure" "Build")
-                      ["Clean" lein-clean])
+		      '("Clojure")
+		      clojure-nav-menu)
 
+  (easy-menu-define clojure-docs-menu nil
+    "Menu Clojure Docs"
+    `("Docs"
+      ("Project Docs"
+       ["API Doc" lein-api-doc]
+       ["Margin Doc" lein-margin-doc]
+       "--"
+       ["Rebuild" (lambda ()
+		    (interactive)
+		    (lein "docs"))])
+      "--"
+      ["Clojure Cheatsheet" clojure-cheatsheet]
+      ["Clojure Library List" clojure-browse-libraries]
+      ["Clojars" clojure-browse-clojars]))
   (easy-menu-add-item nil
-                      '("Clojure" "Build")
-                      ["Rebuild" (lambda ()
-                                   (interactive)
-                                   (lein "do clean, jar, uberjar"))])
-  (easy-menu-add-item nil
-                      '("Clojure" "Build")
-                      ["Build All" (lambda ()
-                                     (interactive)
-                                     (lein "do sub clean, sub jar, sub install, clean, jar, uberjar "))])
-  (easy-menu-add-item nil
-                      '("Clojure" "Build")
-                      ["Run Lint" (lambda ()
-                                     (interactive)
-                                     (lein "checkall"))])
+		      '("Clojure")
+		      clojure-docs-menu))
 
-    (easy-menu-add-item nil
-                      '("Clojure" "Navigate")
-                      ["Open Project File" (lambda ()
-                                     (interactive)
-                                     (lein-open-project-file))])
-
-    (easy-menu-add-item nil
-			'("Clojure" "Navigate")
-			["Toggle Source / Test" (lambda ()
-						  (interactive)
-						  (lein-switch-between-source-and-test))])
-
-    (easy-menu-add-item nil
-			'("Clojure" "Docs")
-			["Clojure Cheatsheet" (lambda ()
-						(interactive)
-						(clojure-cheatsheet))])
-    (easy-menu-add-item nil
-			'("Clojure" "Docs")
-			["Clojure Library List" (lambda ()
-						  (interactive)
-						  (clojure-browse-libraries))])
-    (easy-menu-add-item nil
-			'("Clojure" "Docs")
-			["Clojars" (lambda ()
-						  (interactive)
-						  (clojure-browse-clojars))]))
 
 
 

@@ -16,6 +16,8 @@
     (define-key map (kbd "C-c C-t") 'lein-switch-between-source-and-test)
     (define-key map (kbd "C-!") 'mf/mirror-region-in-multifile)
     (define-key map (kbd "C-c C-t") 'lein-switch-between-source-and-test)
+    (define-key map (kbd "C-c C-s") 'lein-search-project-at-point)
+    (define-key map (kbd "M-p") 'cljr-cycle-privaqcy)
     map))
 
 (defun open-sidebar ()
@@ -23,6 +25,7 @@
   (let ((target-dir (or (lein-project-directory buffer-file-name)
 			default-directory)))
     (dirtree target-dir)))
+
 (define-minor-mode  ng-clojure-mode
   "Nick's special mode"
   ;; init value

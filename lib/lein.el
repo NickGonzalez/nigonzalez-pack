@@ -5,6 +5,7 @@
 
 ;;; Code:
 (require 'browse-url)
+(require 'grep)
 (defun lein (cmd)
   (interactive "slein: ")
   (compile (concat  "lein " cmd)))
@@ -132,9 +133,24 @@
 
 (defun lein-api-doc ()
   (interactive)
-  (browse-url-of-file (concat (lein-docs-directory)
-			      "api/index.html")))
+  (browse-url-of-file (expand-file-name  (concat (lein-docs-directory)
+						 "api/index.html"))))
 
+(defun lein-margin-doc ()
+  (interactive)
+  (browse-url-of-file (expand-file-name  (concat (lein-docs-directory)
+						 "uberdoc.html"))))
+
+(defun lein-search-project (search-string)
+  (interactive "ssearch string: ")
+  (autoload 'rgrep "grep")
+  (rgrep search-string "*.clj" (lein-project-directory buffer-file-name)))
+
+(defun lein-search-project-at-point ()
+  (interactive)
+  (autoload 'rgrep "grep")
+  (grep-compute-defaults)
+  (rgrep (thing-at-point 'symbol t) "*.clj" (lein-project-directory buffer-file-name)))
 
 
 (provide 'lein)

@@ -3,7 +3,6 @@
 ;; Use this file to initiate the pack configuration.
 ;; See README for more information.
 (defmacro nullify ( &rest sexp) nil)
-
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
@@ -61,7 +60,7 @@
 (add-hook 'clojure-mode-hook          #'ng-clojure-mode)
 (add-hook 'cider-mode-hook            #'enable-paredit-mode)
 (add-hook 'cider-repl-mode-hook       #'enable-paredit-mode)
-(add-hook 'window-setup-hook          #'set-transparency)
+
 
 (require 'ido)
 
@@ -80,8 +79,5 @@ your recently and most frequently used commands.")
 (nick-mode t)
 
 (helm-mode t)
-
-
-
 (require 'spaces)
-(require 'window-jump)
+

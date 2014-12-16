@@ -5,7 +5,7 @@
 
 (defun nick-window-setup ()
   (transparency 80)
-  (maximize-windowcs)
+  (maximize-frame)
 )
 
 (defvar nick-mode-map 
@@ -42,9 +42,8 @@
   :global t
 
   (autoload 'dirtree "dirtree" "Add directory to tree view" t)
-  (add-hook 'window-setup-hook          #'window-setup-hook) 
+  (add-hook 'window-setup-hook          #'nick-window-setup) 
 
-  (transparency 80)
   (recentf-open-files))
 
 
